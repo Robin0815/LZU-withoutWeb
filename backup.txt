@@ -1,2 +1,7 @@
 init c C:\Users\Robin\Downloads\LZU-2410d27aa08443c19dfb71f592194301c62af752\Counter\target\Counter-1.0.jar
 start c
+stop c
+allstate
+delete c
+delete c
+allstate

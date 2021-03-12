@@ -10,7 +10,7 @@ public class State implements Command{
     }
 
     @Override
-    public void undo() {
-
+    public void undo(RuntimeEnv re, String s)throws Exception{
+        System.out.println("Nothig to undo");
     }
 }

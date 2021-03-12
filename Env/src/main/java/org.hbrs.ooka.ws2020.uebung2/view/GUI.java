@@ -54,6 +54,7 @@ public class GUI extends JPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent evt) {
         String text = textField.getText();
+        Boolean undo = false;
         Command init = new Init();
         Command delete = new Delete();
         Command start = new Start();
@@ -64,7 +65,17 @@ public class GUI extends JPanel implements ActionListener {
         if (!text.equals("loadconfig")) {
             this.bm.writeConfig(text);
             instructions.add(text);
-        } else {
+        } if(text.equals("undo")){
+            instructions = bm.readConfig();
+            if (instructions.size() < 1) {
+                textArea.append("Config is empty.");
+            }else{
+                String inst = instructions.get(instructions.size() -1);
+                instructions = new ArrayList<>();
+                instructions.add(inst);
+            }
+        }
+        else {
             instructions = bm.readConfig();
             if (instructions.isEmpty()) {
                 textArea.append("Config is empty.");
@@ -77,22 +88,52 @@ public class GUI extends JPanel implements ActionListener {
             try {
                 if (s[0].equals("init")) {
                     //textArea.append(re.initComponent(s[1], s[2]) + newline);
-                    textArea.append(init.execute(re, instruction) +newline);
+                    if (!undo) {
+                        textArea.append(init.execute(re, instruction) + newline);
+                    } else {
+                        init.undo(re, instruction);
+                        textArea.append("undo"+newline);
+                    }
                 } else if (s[0].equals("delete")) {
                     //textArea.append(re.deleteComponent(s[1]) + newline);
-                    textArea.append(delete.execute(re, instruction) +newline);
+                    if (!undo) {
+                        textArea.append(delete.execute(re, instruction) +newline);
+                    } else {
+                        delete.undo(re, instruction);
+                        textArea.append("undo"+newline);
+                    }
                 } else if (s[0].equals("start")) {
                     //textArea.append(re.startComp(s[1]) + newline);
-                    textArea.append(start.execute(re, instruction) +newline);
+                    if (!undo) {
+                        textArea.append(start.execute(re, instruction) +newline);
+                    } else {
+                        start.undo(re, instruction);
+                        textArea.append("undo"+newline);
+                    }
                 } else if (s[0].equals("stop")) {
                     //textArea.append(re.stopComp(s[1]) + newline);
-                    textArea.append(stop.execute(re, instruction) +newline);
+                    if (!undo) {
+                        textArea.append(stop.execute(re, instruction) +newline);
+                    } else {
+                        stop.undo(re, instruction);
+                        textArea.append("undo"+newline);
+                    }
                 } else if (s[0].equals("state")) {
                     //textArea.append(re.getState(s[1]) + newline);
-                    textArea.append(state.execute(re, instruction) +newline);
+                    if (!undo) {
+                        textArea.append(state.execute(re, instruction) +newline);
+                    } else {
+                        state.undo(re, instruction);
+                        textArea.append("undo"+newline);
+                    }
                 } else if (s[0].equals("allstate")) {
                     //textArea.append(re.getThreadListString());
-                    textArea.append(allState.execute(re, instruction) +newline);
+                    if (!undo) {
+                        textArea.append(allState.execute(re, instruction) +newline);
+                    } else {
+                        allState.undo(re, instruction);
+                        textArea.append("undo"+newline);
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();

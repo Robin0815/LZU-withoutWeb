@@ -11,7 +11,9 @@ public class AllState implements Command{
     }
 
     @Override
-    public void undo() {
-
+    public void undo(RuntimeEnv re, String s) throws Exception {
+        System.out.println("Nothing to undo");
     }
+
 }
+
