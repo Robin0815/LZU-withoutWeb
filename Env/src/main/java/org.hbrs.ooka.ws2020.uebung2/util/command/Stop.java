@@ -10,7 +10,8 @@ public class Stop implements Command{
     }
 
     @Override
-    public void undo(RuntimeEnv re, String s)throws Exception{
-
+    public void undo(RuntimeEnv re, String instruction)throws Exception{
+        String[] s = instruction.split(" ");
+        re.startComp(s[1]);
     }
 }

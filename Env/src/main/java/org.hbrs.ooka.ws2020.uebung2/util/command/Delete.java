@@ -10,8 +10,8 @@ public class Delete implements Command{
     }
 
     @Override
-    public void undo(RuntimeEnv re, String s) throws Exception {
-
+    public void undo(RuntimeEnv re, String instruction) throws Exception {
+//TODO
     }
 
 }
